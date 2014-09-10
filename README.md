@@ -5,7 +5,7 @@ Maintain Maintain project specific bash command histories
 If you work on several software projects on your machine, maintaining the command history for each project separately can be big headache. You can get an overall through the 'history' command, but searching for invidual project's history can be a headache. 'ah' helps to address this issue. 
 
 With 'am' you can store your project histories separately(can save them in a project directory). After the 'ah' session for a project is started for a terminal, remaining commands will saved for the prject separately. 'ah' seamlessly integrates with bash. The following command typescript is self-explanatory for its use
-```shell
+```bash
 user@telos:~$ # adding project 1
 user@telos:~$ . ah add proj1 /home/user/tmp/ahsamp/ah/proj1.git/ahlogs 
 Successfully created project  proj1  in  /home/user/tmp/ahsamp/ah/proj1.git/ahlogs
@@ -47,13 +47,13 @@ user@telos:~[ah:proj1]$ . ah history
 user@telos:~[ah:proj1]$ # leaving project 1
 user@telos:~[ah:proj1]$ . ah exit
 leaving ah project environment.. Bye...
-,,,
+```
 
 Install am as follows:
 
-```shell
+```bash
 cd src
 sudo ./install
-,,,
+```
 
 
