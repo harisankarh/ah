@@ -30,9 +30,7 @@ case "$1" in
 			proExtDir=$proDir/$2
 			mkdir -p $proDir/$2
 			mkdir -p $proDir/$2/history
-			touch $proDir/$2/history/detailed
-			touch $proDir/$2/history/summary
-			touch $proDir/$2/config
+			touch $proDir/$2/history/detailed.am
 			echo -e $2"\t"$3 >> $ahconProjectsFile
 			echo "Successfully created project " $2 " in " $3
 			return
@@ -98,7 +96,7 @@ case "$1" in
 		#disable the debug trap
 		;;
 	*)
-#		echo "custom script"
+		echo "unknown command"
 		#check if the expansion is available in the corresponding shortcuts file
 		#if no, display error and exit
 		#if yes, execute the expansion

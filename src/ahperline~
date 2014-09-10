@@ -1,6 +1,6 @@
 #!/bin/bash
 
-historyFile=$projectConfDir/history/detailed
+historyFile=$projectConfDir/history/detailed.am
 
 curhist=$(history | gawk '{$1="";printf("%s\n",$0)}' | grep -v "^ history" | tail -n 1)
 
