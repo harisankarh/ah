@@ -1,12 +1,12 @@
 #!/bin/bash
 
-historyFile=$projectConfDir/history/detailed.am
+export ahHistoryFile=$projectConfDir/history/detailed.am
 
 curhist=$(history | gawk '{$1="";printf("%s\n",$0)}' | grep -v "^ history" | tail -n 1)
 
 if [ "$curhist" != "$PREV_COMMAND" ]; then
 	PREV_COMMAND=$curhist		
 	#save in history 
-	echo -e $(date)"\t"$(pwd)"\t"$curhist >> $historyFile
+	echo -e $(date)"\t"$(pwd)"\t"$curhist >> $ahHistoryFile
 fi
 

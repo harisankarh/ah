@@ -67,14 +67,14 @@ case "$1" in
 	'resume')
 		if cat $ahconProjectsFile | grep "^$2\s"; then
 			#change the prompt
-			PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}[ah:'$2']\$ '
+			export PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}[ah:'$2']\$ '
 			#set the required environment variables
 			proDir=`cat $ahconProjectsFile | grep "^$2\s" | awk '{$1=""; print $0}'`
 			projectConfDir=$proDir/$2
 			#display starting message
 			echo "Resuming "$2 "project. Saving in directory: "$projectConfDir
 			#source the per line command to be executed
-			PROMPT_COMMAND=". $ahBinDir/ahperline"
+			export PROMPT_COMMAND=". $ahBinDir/ahperline"
 		else
 			echo "ERROR: project does not exist. Existing projects are listed below:"
 			. ah ls
@@ -82,17 +82,17 @@ case "$1" in
 		;;
 	'history')
                 if [[ -z $2 ]]; then
-			cat $historyFile | awk -F '\t' '{print $3}'
+			cat $ahHistoryFile | awk -F '\t' '{print $3}'
 		else
-			cat $historyFile
+			cat $ahHistoryFile
 		fi
 		;;
 	'exit')
 		#display leaving message
-		PROMPT_COMMAND=
+		export PROMPT_COMMAND=
 		echo "leaving ah project environment.. Bye..."
 		#reset the prompt
-		PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}\$ '
+		export PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}\$ '
 		#disable the debug trap
 		;;
 	*)
