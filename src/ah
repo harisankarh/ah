@@ -15,10 +15,9 @@ fi
 
 case "$1" in
 	'add')
-#		echo "got add"
 		#check if project already exists
 			#if so give warning and exit
-		#else add the mapping to am.config
+		#else add the mapping to ahprojects
 		if cat $ahconProjectsFile | grep "^$2\s"; then
 			echo "ERROR: project already exists. Remove using ah rm if required"
 			return
@@ -40,22 +39,17 @@ case "$1" in
 		fi
 		;;
 	'rm')
-#		echo "got rm"
 		#check if project already exists
 			#if yes give warning and exit
-		#else remove the mapping to am.config
+		#else remove the mapping to amprojects
 		if [[ -z $2 ]]; then
 			echo "ERROR: give project as third argument"
 			return
 		fi
 		if cat $ahconProjectsFile | grep "^$2\s"; then
 			proDir=`cat $ahconProjectsFile | grep "^$2\s" | awk '{$1=""; print $0}'`
-#			echo "moving " $proDir/$2 "$proDir"/$2
-			#rm -rf $proDir/$2Deleted
-			#mv $proDir/$2 $proDir/$2Deleted
 			cat $ahconProjectsFile | grep -v "^$2\s" > /tmp/ahtmpfil
 			cat /tmp/ahtmpfil > $ahconProjectsFile
-			#echo "Successfully deleted project. Directory backed up in "$proDir"Deleted"
 			echo "Successfully deleted project"
 			return
 		else
@@ -64,18 +58,15 @@ case "$1" in
 		fi
 		;;
 	'edit')
-#		echo "got edit"
-		#modify the mapping in am.config
+		#modify the mapping in ahprojects
 		. ah rm $2
 		. ah add $2 $3
 		;;
 	'ls')
-#		echo "got ls"
-		#list the contents of am.config
+		#list the contents of ahprojects
 		cat $ahconProjectsFile
 		;;
 	'resume')
-#		echo "got resume"
 		if cat $ahconProjectsFile | grep "^$2\s"; then
 			#change the prompt
 			PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}[ah:'$2']\$ '
@@ -84,7 +75,7 @@ case "$1" in
 			projectConfDir=$proDir/$2
 			#display starting message
 			echo "Resuming "$2 "project. Saving in directory: "$projectConfDir
-			#source the debug trap
+			#source the per line command to be executed
 			PROMPT_COMMAND=". $ahBinDir/ahperline"
 		else
 			echo "ERROR: project does not exist. Existing projects are listed below:"
@@ -92,7 +83,6 @@ case "$1" in
 		fi
 		;;
 	'history')
-#		echo "got resume"
                 if [[ -z $2 ]]; then
 			cat $historyFile | awk -F '\t' '{print $3}'
 		else
@@ -100,10 +90,9 @@ case "$1" in
 		fi
 		;;
 	'exit')
-#		echo "got exit"
 		#display leaving message
 		PROMPT_COMMAND=
-		echo "left ah project environment.. Bye..."
+		echo "leaving ah project environment.. Bye..."
 		#reset the prompt
 		PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}\$ '
 		#disable the debug trap
