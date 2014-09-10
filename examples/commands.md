@@ -1,6 +1,6 @@
 Detailed overview of ah commands
 --------------------------------
-
+```bash
 user@telos:~$ # list all ah-supported projects
 user@telos:~$ . ah ls
 temp1	/home/user/tmp/ahsamp/ah/temp1
@@ -44,4 +44,4 @@ Successfully deleted project
 Successfully created project  temp2  in  /home/user/tmp/ahsamp/ah/temp4
 user@telos:~$ . ah exit
 leaving ah project environment.. Bye...
-
+```
