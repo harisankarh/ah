@@ -1,0 +1,12 @@
+#!/bin/bash
+
+historyFile=$projectConfDir/history/detailed
+
+curhist=$(history | gawk '{$1="";printf("%s\n",$0)}' | grep -v "^ history" | tail -n 1)
+
+if [ "$curhist" != "$PREV_COMMAND" ]; then
+	PREV_COMMAND=$curhist		
+	#save in history 
+	echo -e $(date)"\t"$(pwd)"\t"$curhist >> $historyFile
+fi
+

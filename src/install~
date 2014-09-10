@@ -1,0 +1,4 @@
+chmod +x ah
+chmod +x ahperline
+cp ah /usr/bin/
+cp ahperline /usr/bin/

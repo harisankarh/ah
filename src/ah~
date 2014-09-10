@@ -1,0 +1,117 @@
+#!/bin/bash
+
+# binDir="/usr/bin/amtrap"
+ahBinDir="/usr/bin"
+
+ahconfigDir="$HOME/.ah"
+
+ahconProjectsFile=$ahconfigDir/ahprojects
+
+
+if [ ! -e "$ahconProjectsFile" ] ; then
+    mkdir -p $ahconfigDir; touch "$ahconProjectsFile"
+fi
+
+
+case "$1" in
+	'add')
+#		echo "got add"
+		#check if project already exists
+			#if so give warning and exit
+		#else add the mapping to am.config
+		if cat $ahconProjectsFile | grep "^$2\s"; then
+			echo "ERROR: project already exists. Remove using ah rm if required"
+			return
+		fi
+		if [[ -z $3 ]]; then
+			echo "ERROR: give direcory as third argument"
+			return
+		else
+			proDir=$3
+			proExtDir=$proDir/$2
+			mkdir -p $proDir/$2
+			mkdir -p $proDir/$2/history
+			touch $proDir/$2/history/detailed
+			touch $proDir/$2/history/summary
+			touch $proDir/$2/config
+			echo -e $2"\t"$3 >> $ahconProjectsFile
+			echo "Successfully created project " $2 " in " $3
+			return
+		fi
+		;;
+	'rm')
+#		echo "got rm"
+		#check if project already exists
+			#if yes give warning and exit
+		#else remove the mapping to am.config
+		if [[ -z $2 ]]; then
+			echo "ERROR: give project as third argument"
+			return
+		fi
+		if cat $ahconProjectsFile | grep "^$2\s"; then
+			proDir=`cat $ahconProjectsFile | grep "^$2\s" | awk '{$1=""; print $0}'`
+#			echo "moving " $proDir/$2 "$proDir"/$2
+			#rm -rf $proDir/$2Deleted
+			#mv $proDir/$2 $proDir/$2Deleted
+			cat $ahconProjectsFile | grep -v "^$2\s" > /tmp/ahtmpfil
+			cat /tmp/ahtmpfil > $ahconProjectsFile
+			#echo "Successfully deleted project. Directory backed up in "$proDir"Deleted"
+			echo "Successfully deleted project"
+			return
+		else
+			echo "ERROR: project do not exist"
+			return
+		fi
+		;;
+	'edit')
+#		echo "got edit"
+		#modify the mapping in am.config
+		. ah rm $2
+		. ah add $2 $3
+		;;
+	'ls')
+#		echo "got ls"
+		#list the contents of am.config
+		cat $ahconProjectsFile
+		;;
+	'resume')
+#		echo "got resume"
+		if cat $ahconProjectsFile | grep "^$2\s"; then
+			#change the prompt
+			PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}[ah:'$2']\$ '
+			#set the required environment variables
+			proDir=`cat $ahconProjectsFile | grep "^$2\s" | awk '{$1=""; print $0}'`
+			projectConfDir=$proDir/$2
+			#display starting message
+			echo "Resuming "$2 "project. Saving in directory: "$projectConfDir
+			#source the debug trap
+			PROMPT_COMMAND=". $ahBinDir/ahperline"
+		else
+			echo "ERROR: project does not exist. Existing projects are listed below:"
+			. ah ls
+		fi
+		;;
+	'history')
+#		echo "got resume"
+                if [[ -z $2 ]]; then
+			cat $historyFile | awk -F '\t' '{print $3}'
+		else
+			cat $historyFile
+		fi
+		;;
+	'exit')
+#		echo "got exit"
+		#display leaving message
+		PROMPT_COMMAND=
+		echo "left ah project environment.. Bye..."
+		#reset the prompt
+		PS1='${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}\$ '
+		#disable the debug trap
+		;;
+	*)
+#		echo "custom script"
+		#check if the expansion is available in the corresponding shortcuts file
+		#if no, display error and exit
+		#if yes, execute the expansion
+		;;
+esac
