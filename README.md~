@@ -55,5 +55,5 @@ cd src
 sudo ./install
 ```
 
-An overview of all possible commands is available in: [a link](https://github.com/harisankarh/ah/blob/master/examples/commands.md)
+An overview of all possible commands is available in: [file](https://github.com/harisankarh/ah/blob/master/examples/commands.md)
 
