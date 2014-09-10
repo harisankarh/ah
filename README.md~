@@ -2,16 +2,10 @@ ah: Augmented History for BASH environment.
 Maintain project specific bash command histories
 ------------------------------------------------
 
-If you work on several software projects on your machine, maintaining the command history for each project separately can be big headache. You can get an overall through the 'history' command, but searching for invidual project's history can be a headache. 'ah' helps to address this issue. 
+If you work on several software projects on your machine, maintaining the command history for each project separately can be a big headache. You can get an overall history through the 'history' command, but searching for individual project's history can be difficult. 'ah' helps to address this issue. 
 
-With 'ah' you can store your project histories separately(can save them in a project directory). After the 'ah' session for a project is started for a terminal, remaining commands will saved for the prject separately. 'ah' seamlessly integrates with bash. The following command typescript is self-explanatory for its use
+With 'ah' you can store your project histories separately(can save them in a project directory). After the 'ah' session for a project is started for a terminal, remaining commands will be saved for the project separately. 'ah' seamlessly integrates with bash. The following command typescript is self-explanatory for its use.
 ```bash
-user@telos:~$ # adding project 1
-user@telos:~$ . ah add proj1 /home/user/tmp/ahsamp/ah/proj1.git/ahlogs 
-Successfully created project  proj1  in  /home/user/tmp/ahsamp/ah/proj1.git/ahlogs
-user@telos:~$ # adding project 2
-user@telos:~$ . ah add proj2 /home/user/tmp/ahsamp/ah/proj2.git/ahlogs 
-Successfully created project  proj2  in  /home/user/tmp/ahsamp/ah/proj2.git/ahlogs
 user@telos:~$ # working on project 1
 user@telos:~$ . ah resume proj1
 proj1	/home/user/tmp/ahsamp/ah/proj1.git/ahlogs
