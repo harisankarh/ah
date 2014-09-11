@@ -1,4 +1,5 @@
-ah: Augmented History for BASH environment.
+ah: Augmented History for BASH environment
+------------------------------------------
 Maintain project specific bash command histories
 ------------------------------------------------
 
